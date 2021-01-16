@@ -24,6 +24,8 @@ defmodule CuleDatingWeb do
       import Plug.Conn
       import CuleDatingWeb.Gettext
       alias CuleDatingWeb.Router.Helpers, as: Routes
+
+      import Phoenix.LiveView.Controller
     end
   end
 
