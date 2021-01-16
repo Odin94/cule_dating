@@ -16,7 +16,7 @@ config :cule_dating, CuleDatingWeb.Endpoint,
   secret_key_base: "zZVCYos/xolZ0A5STYOjjBAUQ0ybLX0B2koO4BXx+53rIrJpu+OqKxqYqoXZZ2GG",
   render_errors: [view: CuleDatingWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: CuleDating.PubSub,
-  live_view: [signing_salt: "/hV2712g"]
+  live_view: [signing_salt: "rrbrKI/Snw9wteuqXC83fOozN0IJbVQ2"]
 
 # Configures Elixir's Logger
 config :logger, :console,
