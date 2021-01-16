@@ -17,7 +17,7 @@ defmodule CuleDatingWeb.Router do
   scope "/", CuleDatingWeb do
     pipe_through :browser
 
-    live("/", Counter)
+    live("/", Swiper)
   end
 
   # Other scopes may use custom stacks.
