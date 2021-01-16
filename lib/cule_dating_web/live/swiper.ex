@@ -66,7 +66,9 @@ defmodule CuleDatingWeb.Swiper do
       <button phx-click="next">NEXT</button>
 
       <img src="<%= thumbnail(@image_id) %>">
-      <img src="<%= large_image(@image_id) %>">
+      <% if @current_user do %>
+        <img src="<%= large_image(@image_id) %>">
+      <% end %>
     </div>
     """
   end
