@@ -1,6 +1,7 @@
 defmodule CuleDatingWeb.Swiper do
   use Phoenix.LiveView
   require Logger
+  alias CuleDating.Accounts
 
   @topic "live"
   @unsplash_url "https://images.unsplash.com"
@@ -12,10 +13,15 @@ defmodule CuleDatingWeb.Swiper do
     "photo-1554384645-13eab165c24b"
   ]
 
-  def mount(_params, _session, socket) do
-    CuleDatingWeb.Endpoint.subscribe(@topic)
+  def mount(_params, %{"user_token" => token} = session, socket) do
+    current_user = Accounts.get_user_by_session_token(token)
 
-    socket = assign(socket, :image_id, 0)
+    socket = assign(socket, image_id: 0, current_user: current_user)
+    {:ok, socket}
+  end
+
+  def mount(_params, _session, socket) do
+    socket = assign(socket, image_id: 0, current_user: nil)
     {:ok, socket}
   end
 
@@ -65,8 +71,12 @@ defmodule CuleDatingWeb.Swiper do
       <button phx-click="prev">PREV</button>
       <button phx-click="next">NEXT</button>
 
+      <p> <%= inspect @current_user %> </p>
+
       <img src="<%= thumbnail(@image_id) %>">
+      <%= if @current_user do %>
       <img src="<%= large_image(@image_id) %>">
+      <% end %>
     </div>
     """
   end
