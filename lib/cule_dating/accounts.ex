@@ -95,6 +95,42 @@ defmodule CuleDating.Accounts do
 
   ## Settings
 
+  def change_picture_urls(user, attrs \\ %{}) do
+    User.picture_urls_changeset(user, attrs)
+  end
+
+  def add_user_picture(user, attrs \\ %{}) do
+    existing_picture_urls =
+      if user.picture_urls do
+        user.picture_urls
+      else
+        []
+      end
+
+    new_picture = Map.get(attrs, "picture_url")
+
+    user
+    |> User.picture_urls_changeset(%{picture_urls: existing_picture_urls ++ [new_picture]})
+    |> Repo.update()
+  end
+
+  def remove_user_picture(user, attrs \\ %{}) do
+    existing_picture_urls =
+      if user.picture_urls do
+        user.picture_urls
+      else
+        []
+      end
+
+    new_picture_urls =
+      existing_picture_urls
+      |> List.delete(Map.get(attrs, "picture_url"))
+
+    user
+    |> User.picture_urls_changeset(%{picture_urls: new_picture_urls})
+    |> Repo.update()
+  end
+
   @doc """
   Returns an `%Ecto.Changeset{}` for changing the user description.
 

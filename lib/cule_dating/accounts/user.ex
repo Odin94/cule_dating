@@ -39,6 +39,12 @@ defmodule CuleDating.Accounts.User do
     |> validate_password(opts)
   end
 
+  defp validate_picture_urls(changeset) do
+    changeset
+    |> validate_required([:picture_urls])
+    |> validate_length(:picture_urls, max: 8)
+  end
+
   defp validate_description(changeset) do
     changeset
     |> validate_required([:description])
@@ -75,6 +81,12 @@ defmodule CuleDating.Accounts.User do
     else
       changeset
     end
+  end
+
+  def picture_urls_changeset(user, attrs) do
+    user
+    |> cast(attrs, [:picture_urls])
+    |> validate_picture_urls()
   end
 
   @doc """

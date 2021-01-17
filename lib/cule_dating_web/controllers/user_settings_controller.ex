@@ -11,6 +11,36 @@ defmodule CuleDatingWeb.UserSettingsController do
     render(conn, "edit.html")
   end
 
+  def update(conn, %{"action" => "add_picture_url"} = params) do
+    %{"user" => user_params} = params
+    user = conn.assigns.current_user
+
+    case Accounts.add_user_picture(user, user_params) do
+      {:ok, user} ->
+        conn
+        |> put_flash(:info, "Picture added successfully.")
+        |> render(:edit)
+
+      {:error, changeset} ->
+        render(conn, "edit.html", picture_changeset: changeset)
+    end
+  end
+
+  def update(conn, %{"action" => "remove_picture"} = params) do
+    %{"user" => user_params} = params
+    user = conn.assigns.current_user
+
+    case Accounts.remove_user_picture(user, user_params) do
+      {:ok, user} ->
+        conn
+        |> put_flash(:info, "Picture removed successfully.")
+        |> render(:edit)
+
+      {:error, changeset} ->
+        render(conn, "edit.html", picture_changeset: changeset)
+    end
+  end
+
   def update(conn, %{"action" => "update_description"} = params) do
     %{"user" => user_params} = params
     user = conn.assigns.current_user
@@ -87,6 +117,7 @@ defmodule CuleDatingWeb.UserSettingsController do
     |> assign(:description_changeset, Accounts.change_user_description(user))
     |> assign(:email_changeset, Accounts.change_user_email(user))
     |> assign(:password_changeset, Accounts.change_user_password(user))
+    |> assign(:picture_urls_changeset, Accounts.change_picture_urls(user))
   end
 
   defp assign_profile_data(conn, _opts) do

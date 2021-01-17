@@ -1,5 +1,30 @@
 <h1>Settings</h1>
 
+<h3>Change pictures</h3>
+
+<div>
+  <p><strong>Current pictures:</strong><br> <%= @picture_urls %> <p>
+</div>
+
+<%= form_for @picture_urls_changeset, Routes.user_settings_path(@conn, :update), fn f -> %>
+  <%= if @picture_urls_changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <%= hidden_input f, :action, name: "action", value: "add_picture_url" %>
+
+  <%= label f, :picture_url %>
+  <%= text_input f, :picture_url, required: true %>
+  <%= error_tag f, :picture_url %>
+
+  <div>
+    <%= submit "Add picture" %>
+  </div>
+<% end %>
+
+
 <h3>Change description</h3>
 
 <%= form_for @description_changeset, Routes.user_settings_path(@conn, :update), fn f -> %>
