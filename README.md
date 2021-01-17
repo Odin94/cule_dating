@@ -20,7 +20,6 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 
 
 ## TODO
-* Get basic database schema straight (put profile in user)
 * Add email notifier to user_notifier.ex
   * Require email verification
 
