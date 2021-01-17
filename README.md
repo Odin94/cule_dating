@@ -20,12 +20,12 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 
 
 ## TODO
+* Page for editing profile
+  * preview image thumbnails
+  * remove images
+
 * Add email notifier to user_notifier.ex
   * Require email verification
-
-* Page for editing profile
-  * Add images
-  * Add description
 
 * Add full profiles to Swiper
 
