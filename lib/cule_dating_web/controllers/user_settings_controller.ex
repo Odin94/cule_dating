@@ -4,7 +4,8 @@ defmodule CuleDatingWeb.UserSettingsController do
   alias CuleDating.Accounts
   alias CuleDatingWeb.UserAuth
 
-  plug :assign_email_and_password_changesets
+  plug :assign_changesets
+  plug :assign_profile_data
 
   def edit(conn, _params) do
     render(conn, "edit.html")
@@ -79,12 +80,21 @@ defmodule CuleDatingWeb.UserSettingsController do
     end
   end
 
-  defp assign_email_and_password_changesets(conn, _opts) do
+  defp assign_changesets(conn, _opts) do
     user = conn.assigns.current_user
 
     conn
     |> assign(:description_changeset, Accounts.change_user_description(user))
     |> assign(:email_changeset, Accounts.change_user_email(user))
     |> assign(:password_changeset, Accounts.change_user_password(user))
+  end
+
+  defp assign_profile_data(conn, _opts) do
+    user = conn.assigns.current_user
+
+    conn
+    |> assign(:description, user.description)
+    |> assign(:picture_urls, user.picture_urls)
+    |> assign(:name, user.name)
   end
 end

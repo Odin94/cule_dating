@@ -11,6 +11,10 @@
 
   <%= hidden_input f, :action, name: "action", value: "update_description" %>
 
+  <div>
+    <p><strong>Current description:</strong><br> <%= @description %> <p>
+  </div>
+
   <%= label f, :description %>
   <%= text_input f, :description, required: true %>
   <%= error_tag f, :description %>
