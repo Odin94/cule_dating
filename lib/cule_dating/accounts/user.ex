@@ -8,6 +8,9 @@ defmodule CuleDating.Accounts.User do
     field :password, :string, virtual: true
     field :hashed_password, :string
     field :confirmed_at, :naive_datetime
+    field :description, :string
+    field :name, :string
+    field :picture_urls, {:array, :string}
 
     timestamps()
   end

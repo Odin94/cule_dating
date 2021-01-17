@@ -20,4 +20,20 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 
 
 ## TODO
+* Get basic database schema straight (put profile in user)
 * Add email notifier to user_notifier.ex
+  * Require email verification
+
+* Page for editing profile
+  * Add images
+  * Add description
+
+* Add full profiles to Swiper
+
+* Add match system
+
+* Add chat
+
+* Add simple games to play together in chat?
+
+* Extend profiles with more info than just "description"
