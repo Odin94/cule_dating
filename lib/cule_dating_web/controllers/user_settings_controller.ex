@@ -10,6 +10,21 @@ defmodule CuleDatingWeb.UserSettingsController do
     render(conn, "edit.html")
   end
 
+  def update(conn, %{"action" => "update_description"} = params) do
+    %{"user" => user_params} = params
+    user = conn.assigns.current_user
+
+    case Accounts.update_user_description(user, user_params) do
+      {:ok, user} ->
+        conn
+        |> put_flash(:info, "Description updated successfully.")
+        |> render(:edit)
+
+      {:error, changeset} ->
+        render(conn, "edit.html", description_changeset: changeset)
+    end
+  end
+
   def update(conn, %{"action" => "update_email"} = params) do
     %{"current_password" => password, "user" => user_params} = params
     user = conn.assigns.current_user
@@ -68,6 +83,7 @@ defmodule CuleDatingWeb.UserSettingsController do
     user = conn.assigns.current_user
 
     conn
+    |> assign(:description_changeset, Accounts.change_user_description(user))
     |> assign(:email_changeset, Accounts.change_user_email(user))
     |> assign(:password_changeset, Accounts.change_user_password(user))
   end

@@ -39,6 +39,12 @@ defmodule CuleDating.Accounts.User do
     |> validate_password(opts)
   end
 
+  defp validate_description(changeset) do
+    changeset
+    |> validate_required([:description])
+    |> validate_length(:description, max: 500)
+  end
+
   defp validate_email(changeset) do
     changeset
     |> validate_required([:email])
@@ -68,6 +74,21 @@ defmodule CuleDating.Accounts.User do
       |> delete_change(:password)
     else
       changeset
+    end
+  end
+
+  @doc """
+  A user changeset for changing the description.
+
+  It requires the description to change otherwise an error is added.
+  """
+  def description_changeset(user, attrs) do
+    user
+    |> cast(attrs, [:description])
+    |> validate_description()
+    |> case do
+      %{changes: %{description: _}} = changeset -> changeset
+      %{} = changeset -> add_error(changeset, :description, "did not change")
     end
   end
 

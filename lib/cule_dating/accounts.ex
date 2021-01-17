@@ -6,6 +6,7 @@ defmodule CuleDating.Accounts do
   import Ecto.Query, warn: false
   alias CuleDating.Repo
   alias CuleDating.Accounts.{User, UserToken, UserNotifier}
+  require Logger
 
   ## Database getters
 
@@ -93,6 +94,40 @@ defmodule CuleDating.Accounts do
   end
 
   ## Settings
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for changing the user description.
+
+  ## Examples
+
+      iex> change_user_description(user)
+      %Ecto.Changeset{data: %User{}}
+
+  """
+  def change_user_description(user, attrs \\ %{}) do
+    User.description_changeset(user, attrs)
+  end
+
+  @doc """
+  Updates the user description.
+
+  ## Examples
+
+      iex> update_user_description(user, "valid description", %{description: ...})
+      {:ok, %User{}}
+
+      iex> update_user_description(user, "invalid description", %{description: ...})
+      {:error, %Ecto.Changeset{}}
+
+  """
+
+  def update_user_description(user, attrs) do
+    Logger.info(user)
+
+    user
+    |> User.description_changeset(attrs)
+    |> Repo.update()
+  end
 
   @doc """
   Returns an `%Ecto.Changeset{}` for changing the user email.
